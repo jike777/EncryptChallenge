@@ -1,0 +1,740 @@
+:root {
+    --color-background: #f3f5fc;
+    --color-primary: #0a3871;
+    --color-primary-dark: #3c4b5f;
+    --color-secondary: #d8dfe8;
+    --color-text-light: #495057;
+    --font-family: "Inter", sans-serif;
+    --font-size-large: 2rem;
+    --font-size-medium: 1.125rem;
+    --font-size-small: 1rem;
+    --font-size-xsmall: 0.875rem;
+    --font-weight-normal: 400;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.matrix-canvas {
+    position: absolute;
+    top: 0;
+    left: 5px;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    /* Asegura que esté encima de otros elementos */
+}
+
+@keyframes matrix {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+html,
+body {
+    height: 100%;
+    /* Asegura que html y body ocupen toda la altura de la ventana */
+    margin: 0;
+    /* Elimina los márgenes por defecto */
+    overflow-x: hidden;
+    overflow: hidden;
+    position: relative;
+    /* Necesario para la posición absoluta del efecto Matrix */
+    /* Evita el desbordamiento horizontal */
+    /* Oculta el desbordamiento horizontal */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-background);
+    font-family: var(--font-family);
+    color: var(--color-text-light);
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+    /* Evita el desplazamiento horizontal */
+}
+
+
+header {
+    display: flex;
+    height: auto;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    height: 48px;
+    margin-top: 40px;
+    margin-left: 40px;
+    gap: 40px;
+    opacity: 0px;
+}
+
+.main-container {
+    flex: 1;
+    /* Ocupa el espacio restante disponible */
+    display: flex;
+    flex-direction: column;
+    /* Coloca el contenido verticalmente */
+    overflow-y: auto;
+    /* Permite el desplazamiento vertical si el contenido es demasiado alto */
+
+}
+
+.encriptacion {
+    display: flex;
+    justify-content: space-between;
+    padding: 0%;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+}
+
+.textarea_encriptar {
+    width: 580px;
+    height: 340px;
+    border: none;
+    resize: none;
+    font-family: var(--font-family);
+    font-size: 32px;
+    background-color: transparent;
+    border-color: transparent;
+    outline: none;
+    flex: 1;
+    margin-left: 35%;
+    padding-top: 40px;
+}
+
+/* Estilo para el placeholder del primer textarea */
+.textarea_encriptar::placeholder {
+    color: var(--color-primary);
+    /* Cambia a tu color deseado */
+    opacity: 1;
+    /* Asegúrate de que el placeholder no sea transparente */
+}
+
+.terminos {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 67px;
+    margin-left: 0%;
+    gap: 5px;
+    opacity: 1;
+}
+
+.icono {
+    font-size: 1.5rem;
+    /* Tamaño del ícono */
+    color: var(--color-primary);
+    /* Color del ícono */
+    margin-left: 35%;
+    /* Espacio entre el ícono y el texto */
+}
+
+.btn_acciones_botones {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 67px;
+    margin-left: 35%;
+    gap: 24px;
+    opacity: 1;
+}
+
+.btn_acciones_encriptar,
+.btn_acciones_desencriptar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(50% - 12px);
+    /* Ajuste de ancho para dos botones con un gap de 24px */
+    height: 67px;
+    border-radius: 1.5rem;
+    font-family: var(--font-family);
+    font-size: var(--font-size-medium);
+    line-height: 1.1875rem;
+    cursor: pointer;
+    text-align: center;
+    border: 0.0625rem solid;
+}
+
+.btn_acciones_encriptar {
+    background: var(--color-primary);
+    color: #ffffff;
+    border-color: var(--color-primary);
+}
+
+.btn_acciones_desencriptar {
+    background: var(--color-secondary);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.resultado_del_encriptado {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 5%;
+    left: 68%;
+    width: 23%;
+    height: 85%;
+    background-color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 32px;
+    gap: 16px;
+    z-index: 1;
+    align-items: center;
+    /* Centra horizontalmente el contenido */
+    justify-content: center;
+    /* Centra verticalmente el contenido, si deseas centrar todo */
+    transition: all 0.5s ease;
+}
+
+.resultado_del_encriptado.error-active {
+    width: 23%;
+    height: 90%;
+    max-width: 90vw;
+    max-height: 80vh;
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 32px;
+    /* Asegura que el borde tenga esquinas redondeadas */
+    box-sizing: border-box;
+    /* Incluye el padding y el borde en el tamaño total del contenedor */
+    border: 4px solid transparent;
+    /* Espacio para el borde animado */
+    border-image: linear-gradient(45deg, #fb0094, #0000ff, #00ff00, #ffff00, #ff0000, #fb0094,
+            #0000ff, #00ff00, #ffff00, #ff0000) 1;
+    /* Aplica el gradiente como borde */
+    border-image-slice: 1;
+    /* Asegura que el gradiente se use en todo el borde */
+    z-index: 1;
+    /* Asegura que el borde esté por debajo del contenido */
+    overflow: hidden;
+    /* Evita que el borde animado sobresalga */
+}
+
+
+
+.hidden {
+    display: none !important;
+}
+
+/* Contenedor para el mensaje del usuario */
+.mensaje_para_usuario {
+    font-family: var(--font-family);
+    padding: 1%;
+    width: 100%;
+    text-align: center;
+    margin-top: 0;
+    /* Elimina el position: absolute */
+}
+
+/* Estilos generales del mensaje de error */
+.error-message {
+    --border-right: 6px;
+    --text-stroke-color: rgba(255, 255, 255, 0.6);
+    --animation-color: #0b36c3;
+    --fs-size: 1.5em;
+    font-size: var(--fs-size);
+    font-family: var(--font-family);
+    letter-spacing: 3px;
+    color: transparent;
+    align-items: center;
+    position: relative;
+    text-transform: uppercase;
+    text-decoration: none;
+    -webkit-text-stroke: 0.5px var(--text-stroke-color);
+}
+
+/* Pseudoelemento para la animación */
+.error-message::before,
+.error-message.active::before {
+    content: attr(data-text);
+    color: var(--animation-color);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset: 0;
+    /* Cubre todo el contenedor padre */
+    width: 150%;
+    /* Ajusta el ancho al 100% del contenedor */
+    height: 100%;
+    /* Asegura que cubra toda la altura */
+    border-right: var(--border-right) solid var(--animation-color);
+    overflow: hidden;
+    transition: width 0.5s ease;
+    -webkit-text-stroke: 1px var(--animation-color);
+    filter: drop-shadow(0 0 23px var(--animation-color));
+    /* Este puede estar en active si prefieres */
+}
+
+/* Solo si necesitas animar alguna propiedad específica en active */
+.error-message.active::before {
+    width: 150%;
+    /* Mantén el ancho al 100% si quieres que esté alineado */
+    transform: translateX(-18%);
+    /* Mantén la traslación para centrar */
+}
+
+
+
+
+
+
+
+/* Estilo del párrafo */
+.parrafo-instruccion {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-text-light);
+
+}
+
+/* Estilos compartidos para todos los botones */
+.btn-copiar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 87%;
+    height: 67px;
+    /* Altura igual a la de los otros botones */
+    border-radius: 1.5rem;
+    /* Igual que los otros botones */
+    font-family: var(--font-family);
+    font-size: var(--font-size-medium);
+    line-height: 1.1875rem;
+    cursor: pointer;
+    text-align: center;
+    border: 0.0625rem solid;
+    position: absolute;
+    /* Asegura que el botón esté posicionado al final del contenedor */
+    bottom: 3%;
+    /* Ajusta el valor según el espacio que deseas debajo del botón */
+    left: 50%;
+    /* Centra horizontalmente el botón */
+    transform: translateX(-50%);
+    /* Ajusta el botón para centrarlo correctamente */
+}
+
+/* Estilo específico para el botón "Copiar" */
+.btn-copiar {
+    background: #ffffff;
+    /* Color de fondo para el botón "Copiar" */
+    color: var(--color-primary);
+    /* Color del texto */
+    border-color: var(--color-primary);
+    /* Color del borde */
+}
+
+/* Oculta el botón "Copiar" inicialmente */
+.btn-copiar {
+    display: none;
+    /* El botón estará oculto inicialmente */
+}
+
+.imagen-mensaje {
+    width: 100%;
+    max-width: 336px;
+    /* Ancho máximo según las medidas del Figma */
+    height: auto;
+    /* Ajusta la altura proporcionalmente */
+    margin-bottom: 8px;
+    /* Espacio de 8px debajo de la imagen */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* Centra la imagen horizontalmente */
+}
+
+#video-container {
+    width: 580px;
+    height: 340px;
+    margin-left: 35%;
+    padding-top: 40px;
+
+    z-index: 3;
+    /* Oculto inicialmente */
+}
+
+/* Estilo para el textarea */
+.textarea-result {
+    width: calc(100% - 64px);
+    height: calc(100% - 128px);
+    padding: 10px;
+    margin: 32px;
+    box-sizing: border-box;
+    resize: none;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    font-family: var(--font-family);
+    font-size: var(--font-size-medium);
+    line-height: 1.5;
+    background-color: #ffffff;
+    color: var(--color-text-light);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: none;
+    /* Oculto inicialmente */
+}
+
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-primary);
+    font-family: var(--font-family);
+    color: #ffffff;
+    padding: 10px;
+    width: 100%;
+    position: relative;
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    /* Espacio entre el texto y los íconos */
+}
+
+.footer-content p {
+    margin: 0;
+    /* Elimina los márgenes del texto */
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    /* Espacio entre los íconos */
+}
+
+.social-icons a {
+    color: #ffffff;
+    /* Color blanco para los íconos */
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: #ccc;
+    /* Color más claro al pasar el mouse sobre los íconos */
+}
+
+/* Estilo específico para navegadores Webkit (Chrome, Safari) */
+@media all and (-webkit-min-device-pixel-ratio: 0) {
+    footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--color-primary);
+        font-family: var(--font-family);
+        color: #ffffff;
+        padding: 10px;
+        width: 100%;
+        position: relative;
+        margin-top: auto;
+    }
+}
+
+
+/* Media Query para Tablets con ancho de 768px */
+@media only screen and (max-width: 768px) {
+
+    header {
+        display: flex;
+        height: auto;
+    }
+
+    .logo {
+        display: flex;
+        flex-direction: column;
+        width: 120px;
+        height: 48px;
+        margin-top: 40px;
+        margin-left: 2px;
+        gap: 40px;
+        opacity: 0px;
+    }
+
+    .main-container {
+        flex: 1;
+        /* Ocupa el espacio restante disponible */
+        display: flex;
+        flex-direction: column;
+        /* Coloca el contenido verticalmente */
+        overflow-y: auto;
+        /* Permite el desplazamiento vertical si el contenido es demasiado alto */
+        padding-bottom: 20px;
+        /* Asegura que haya espacio al final del contenido */
+        box-sizing: border-box;
+
+
+    }
+
+    .encriptacion {
+        display: flex;
+        justify-content: center;
+        padding: 0%;
+        flex-direction: column;
+        width: auto;
+        height: auto;
+    }
+
+    .textarea_encriptar {
+        width: 90%;
+        height: 340px;
+        border: none;
+        resize: none;
+        font-family: var(--font-family);
+        font-size: 32px;
+        background-color: transparent;
+        border-color: transparent;
+        outline: none;
+        flex: 1;
+        margin-left: 30px;
+        padding-top: 40px;
+    }
+
+    .terminos {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        height: 67px;
+        margin-left: 0%;
+        gap: 5px;
+        opacity: 1;
+    }
+
+    .icono {
+        font-size: 1.5rem;
+        /* Tamaño del ícono */
+        color: var(--color-primary);
+        /* Color del ícono */
+        margin-left: 30px;
+        /* Espacio entre el ícono y el texto */
+    }
+
+    .btn_acciones_botones {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 90%;
+        height: 67px;
+        margin-left: 30px;
+        gap: 24px;
+        opacity: 1;
+    }
+
+    .btn_acciones_encriptar,
+    .btn_acciones_desencriptar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: calc(50% - 12px);
+        /* Ajuste de ancho para dos botones con un gap de 24px */
+        height: 67px;
+        border-radius: 1.5rem;
+        font-family: var(--font-family);
+        font-size: var(--font-size-medium);
+        line-height: 1.1875rem;
+        cursor: pointer;
+        text-align: center;
+        border: 0.0625rem solid;
+    }
+
+
+    /* Contenedor del resultado */
+    .resultado_del_encriptado {
+        display: flex;
+        flex-direction: column;
+        position: static;
+        /* Cambia relative por static */
+        min-height: 500px;
+        /* O usa una altura fija como height: 300px */
+        width: 85%;
+        margin-left: 30px;
+        background-color: white;
+        padding: 20px;
+        box-sizing: border-box;
+        border-radius: 32px;
+        gap: 15px;
+        z-index: 1;
+        align-items: center;
+        justify-content: flex-start;
+        overflow-y: auto;
+        margin-top: 20px;
+    }
+
+    .textarea-result {
+        width: calc(100% - 42px);
+        /* Ancho del 100% menos los márgenes */
+        height: 150%;
+        /* Altura del 100% menos los márgenes */
+        padding: 5px;
+        margin: 10px;
+        /* Márgenes para el espaciado interno */
+        box-sizing: border-box;
+        resize: none;
+        border-radius: 10px;
+        border: 1px solid var(--color-border);
+        font-family: var(--font-family);
+        font-size: var(--font-size-large);
+        line-height: 1.5;
+        background-color: #ffffff;
+        color: var(--color-text-light);
+        position: relative;
+        /* Asegura que el textarea esté en el flujo normal del contenedor */
+        z-index: 1;
+        display: none;
+        /* Oculto inicialmente */
+    }
+
+    /* Contenedor para el mensaje del usuario */
+    .mensaje_para_usuario {
+        font-family: var(--font-family);
+        padding: 1%;
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        margin-top: 10%;
+    }
+
+    /* Mensaje de error */
+    /* Clase que activa la animación */
+    .error-message.active::before {
+        width: auto;
+        /* Ajusta al contenido */
+        height: 100%;
+        /* Ajusta al 50% del contenedor padre */
+        margin-left: 5px;
+        /* Alinea el contenedor correctamente */
+        padding: 10px;
+        /* Añade espacio alrededor del texto */
+        display: inline-block;
+        /* Ajusta el contenedor al tamaño del contenido */
+        white-space: normal;
+        /* Permite que el texto se envuelva */
+        overflow: visible;
+        /* Asegura que el contenido no se corte */
+        position: relative;
+        font-size: 80%;
+        font-weight: 700;
+        margin-top: 15%;
+        margin-left: 46px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        left: 10%;
+    }
+
+    .resultado_del_encriptado.error-active {
+        width: auto;
+        /* Deja que el ancho se ajuste al contenido */
+        height: 50%;
+        /* Deja que la altura se ajuste al contenido */
+        margin-left: 20px;
+        /* Alinea el contenedor correctamente */
+        padding: 10px;
+        /* Añade espacio alrededor del texto */
+        display: inline-block;
+        /* Asegura que el contenedor se ajuste al tamaño del contenido */
+        white-space: normal;
+        /* Permite que el texto envuelva en múltiples líneas */
+        overflow: visible;
+        /* Asegura que el contenido no se corte */
+    }
+
+    /* Estilo del h2 */
+    .mensaje-result {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--color-primary);
+        margin-bottom: 16px;
+    }
+
+    /* Estilo del párrafo */
+    .parrafo-instruccion {
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--color-text-light);
+    }
+
+    /* Estilo del botón "Copiar" */
+    .btn-copiar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+        height: 67px;
+        border-radius: 1.5rem;
+        font-family: var(--font-family);
+        font-size: var(--font-size-medium);
+        line-height: 1.1875rem;
+        cursor: pointer;
+        text-align: center;
+        border: 0.0625rem solid;
+        margin-top: auto;
+        align-self: center;
+        position: relative;
+        /* Mantiene el botón en el flujo del contenedor */
+        z-index: 2;
+        /* Asegura que el botón esté sobre otros elementos si es necesario */
+        display: none;
+        /* Oculto inicialmente */
+    }
+
+    /* Oculta el botón "Copiar" inicialmente */
+    .btn-copiar {
+        display: none;
+        /* El botón estará oculto inicialmente */
+    }
+
+
+    footer {
+        flex-direction: column;
+        padding: 20px;
+        margin-top: 20px;
+        box-sizing: border-box;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .social-icons {
+        gap: 10px;
+    }
+
+    .social-icons a {
+        font-size: 28px;
+        /* Tamaño más grande para pantallas pequeñas */
+    }
+
+}

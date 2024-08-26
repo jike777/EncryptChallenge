@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Encriptador de Mensajes</title>
+  </head>
+  <body>
+    <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+    <header class="header">
+      <img src="img/Logo.png" alt="Logo Alura" class="logo" />
+    </header>
+    <main class="main-container">
+      <section class="encriptacion">
+        <article>
+          <textarea
+            id="text-input"
+            class="textarea_encriptar"
+            cols="30"
+            rows="20"
+            placeholder="Ingrese aquí el texto:"
+          ></textarea>
+          <div class="terminos">
+            <i class="fas fa-exclamation-circle icono"></i> Solo letras
+            minúsculas sin acentos
+          </div>
+          <div class="btn_acciones_botones">
+            <button
+              type="button"
+              class="btn_acciones_encriptar"
+              onclick="encriptar()"
+            >
+              Encriptar
+            </button>
+            <button
+              type="button"
+              class="btn_acciones_desencriptar"
+              onclick="desencriptar()"
+            >
+              Desencriptar
+            </button>
+          </div>
+        </article>
+        <article class="resultado_del_encriptado">
+          <div class="resultado-contenido">
+            <textarea
+              id="text-area-encriptado"
+              class="textarea-result"
+              readonly
+              aria-label="Texto encriptado/desencriptado"
+            ></textarea>
+            <div class="mensaje_para_usuario" id="mensaje_para_usuario">
+              <img
+                src="img/Muñeco.png"
+                alt="Imagen Muñeco"
+                class="imagen-mensaje"
+              />
+              <div>
+                <h2 id="mensaje-result">
+                  <span class="actual-text"
+                    >Ningún mensaje fue encontrado</span
+                  >
+                </h2>
+              </div>
+              <p id="parrafo-instruccion">
+                Ingresa el texto que deseas encriptar o desencriptar
+              </p>
+            </div>
+            <button class="btn-copiar" onclick="copiarTexto()">Copiar</button>
+            <!--<div id="video-container" class="hidden">
+              <video id="video" width="580" height="340" controls>
+                <source src="video/Challenge.mp4" type="video/mp4" />
+                Tu navegador no soporta videos.
+              </video>
+            </div>-->
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <p>@Desarrollado por Jimmy Cortes 2024</p>
+        <div class="social-icons">
+          <a
+            href="https://github.com/jike777"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+          >
+            <i class="fab fa-github"></i>
+          </a>
+          <a
+            href="https://www.youtube.com/@JimmyCortes-td9tp"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
+          >
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/jimmy-orlando-cortes-1aa270139/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+          >
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="code.js" defer></script>
+  </body>
+</html>
