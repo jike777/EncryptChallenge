@@ -1,14 +1,21 @@
 <p align="center"> 
-   <img src="https://img.shields.io/badge/STATUS-EN%20DESARROLLO-green" alt="Estado del Proyecto">
+   <a href="https://github.com/jike777/EncryptChallenge">
+      <img src="https://img.shields.io/badge/STATUS-EN%20DESARROLLO-green" alt="Estado del Proyecto">
+   </a>
 </p>
 
 <p align="center" style="display: flex; justify-content: center; gap: 10px;"> 
-   <img src="https://img.shields.io/badge/STATUS-Open%20Source-green" alt="Open Source"> 
-   <img src="https://img.shields.io/badge/License-not%20specified-red" alt="Licencia no especificada"> 
+   <a href="https://github.com/jike777/EncryptChallenge">
+      <img src="https://img.shields.io/badge/STATUS-Open%20Source-green" alt="Open Source"> 
+   </a>
+   <a href="https://github.com/jike777/EncryptChallenge/blob/main/LICENSE">
+      <img src="https://img.shields.io/badge/License-not%20specified-red" alt="Licencia no especificada"> 
+   </a>
    <a href="https://www.linkedin.com/in/jimmy-orlando-cortes-1aa270139/">
       <img src="https://img.shields.io/badge/LinkedIn-Jimmy%20Orlando%20Cortes-blue" alt="LinkedIn">
    </a>
 </p>
+
 
 <h1 align="center">EncryptChallenge</h1>
 
