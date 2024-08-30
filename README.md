@@ -27,6 +27,7 @@
 ## Índice
 - [Insignias](#insignias)
 - [Descripción del Proyecto](#descripción-del-proyecto)
+- [Interfaz del Proyecto](#interfaz-del-proyecto) 
 - [Estado del Proyecto](#estado-del-proyecto)
 - [Características de la Aplicación y Demostración](#características-de-la-aplicación-y-demostración)
 - [Acceso al Proyecto](#acceso-al-proyecto)
@@ -60,6 +61,10 @@ La aplicación permite al usuario:
 3. Descifrar el texto cifrado al hacer clic en el botón "Descifrar".
 4. Visualizar el resultado en un área separada.
 5. Copiar el texto cifrado o descifrado con un botón adicional.
+
+## Interfaz del Proyecto
+   
+![2024-08-30_01h05_12](https://github.com/user-attachments/assets/e6991ff1-910b-49e6-bd11-df5584aa6ef9)
 
 ## Acceso al Proyecto
 Puedes acceder al código fuente del proyecto utilizando los siguientes enlaces:
